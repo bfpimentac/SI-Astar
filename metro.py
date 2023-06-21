@@ -26,20 +26,20 @@ YellowLine = ["E7", "E5", "E8", "E9", "E2", "E10"]
 GreenLine = ["E12", "E4", "E8", "E13", "E14"]
 
 matrix_neighbors = {
-"E1" : ["E2"],
-"E2" : ["E1", "E3", "E9", "E10"],
-"E3" : ["E2", "E4", "E9", "E13"],
-"E4" : ["E3", "E5", "E8", "E13"],
-"E5" : ["E4", "E6", "E7", "E8"],
-"E6" : ["E5"],
-"E7" : ["E5"],
-"E8" : ["E4", "E5", "E9", "E12"],
-"E9" : ["E2", "E3", "E8", "E11"],
-"E10" : ["E2"],
-"E11" : ["E9"],
-"E12" : ["E8"],
-"E13" : ["E3", "E4", "E14"],
-"E14" : ["E13"]
+    "E1" : [("E2", 20, "blue")], 
+    "E2" : [("E3", 17, "blue"), ("E1", 20, "blue"), ("E9", 20, "yellow"), ("E10", 7, "yellow")], 
+    "E3" : [("E2", 17, "blue"), ("E4", 12.6, "blue"), ("E9", 18.8, "red"), ("E13", 37.4, "red")],
+    "E4" : [("E3", 12.6, "blue"), ("E5", 26, "blue"), ("E8", 30.6, "green"), ("E13", 25.6, "green")],
+    "E5" : [("E4", 26, "blue"), ("E6", 6, "blue"), ("E7", 4.8, "yellow"), ("E8", 60, "yellow")],
+    "E6" : [("E5", 6, "blue")],
+    "E7" : [("E5", 4.8, "yellow")],
+    "E8" : [("E5", 60, "yellow"), ("E4", 30.6, "green"), ("E9", 19.2, "yellow"), ("E12", 12.8, "green")],
+    "E9" : [("E8", 19.2, "yellow"), ("E2", 20, "yellow"), ("E3", 18.8, "red"), ("E11", 24.4, "red")],
+    "E10": [("E2", 7, "yellow")],
+    "E11": [("E9", 24.4, "red")],
+    "E12": [("E8", 12.8, "green")],
+    "E13": [("E3", 37.4, "red"), ("E4", 25.6, "green"), ("E14", 10.2, "green")],
+    "E14": [("E13", 10.2, "green")]
 }
 
 def get_neighbors(station):
@@ -50,15 +50,12 @@ def get_distance(array, currentstation):
     newArray = []
     distance = 0
     for station in array: 
-        if (f'{currentstation}-{station}' in realDistance):
-            distance = realDistance[f'{currentstation}-{station}']
-        elif (f'{station}-{currentstation}' in realDistance):
-            distance =  realDistance[f'{station}-{currentstation}']
+        if (f"{currentstation}-{station}" in realDistance):
+            distance = realDistance[f"{currentstation}-{station}"]
+        elif (f"{station}-{currentstation}" in realDistance):
+            distance =  realDistance[f"{station}-{currentstation}"]
         newArray.append([station, distance ])
     return newArray
-
-def distanceToTime(station1, station2):
-    #luquinhasss preciso de ajuda p fazer uma funcao q va de distancia p tempo, considerando os 4 minutos se forem linhas diferete
 
 
 def best_way(start, end):
