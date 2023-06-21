@@ -46,16 +46,6 @@ def get_neighbors(station):
     if (station in matrix_neighbors):
         return matrix_neighbors[station]
 
-def get_distance(array, currentstation): 
-    newArray = []
-    distance = 0
-    for station in array: 
-        if (f"{currentstation}-{station}" in realDistance):
-            distance = realDistance[f"{currentstation}-{station}"]
-        elif (f"{station}-{currentstation}" in realDistance):
-            distance =  realDistance[f"{station}-{currentstation}"]
-        newArray.append([station, distance ])
-    return newArray
 
 
 def best_way(start, end):
