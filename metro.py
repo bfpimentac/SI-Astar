@@ -1,3 +1,11 @@
+class Node:
+    def __init__(self, father, station, line, g):
+        self.father = father
+        self.station = station
+        self.line = line
+        self.g = g 
+
+
 Directdistance = [
     
         [0,    10,   18.5, 24.8, 36.4, 38.8, 35.8, 25.4, 17.6, 9.1,  16.7, 27.3, 27.6, 29.8], # Estação E1
@@ -20,10 +28,25 @@ realDistance = {"E1-E10":10, "E2-E3": 3, "E2-E9":10, "E2-E10":3.5, "E3-E4":6.3, 
 "E3-E13": 18.7, "E4-E5":13, "E4-E8":15.3, "E4-E13": 12.8, "E5-E6": 3, "E5-E7":2.4, "E5-E8": 30,
 "E8-E9":9.6, "E8-E12":6.4, "E9-E11":12.2, "E13-E14": 5.1}
 
-RedLine = ["E11", "E9", "E3", "E14"]
-BlueLine = ["E1", "E2", "E3", "E4", "E5", "E6"]
-YellowLine = ["E7", "E5", "E8", "E9", "E2", "E10"]
-GreenLine = ["E12", "E4", "E8", "E13", "E14"]
+adjacence_matrix = [
+    
+        [0,   1 ,  0 , 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0], # Estação E1
+        [1,   0 ,  1 , 0, 0, 0, 0, 0, 1, 1,  0, 0, 0, 0], # Estação E2
+        [0,   1 ,  0 , 1, 0, 0, 0, 0, 1, 0,  0, 0, 1, 0], # Estação E3
+        [0,   0 ,  1 , 0, 1, 0, 0, 1, 0, 0,  0, 0, 1, 0], # Estação E4
+        [0,   0 ,  0 , 1, 0, 1, 1, 1, 0, 0,  0, 0, 0, 0], # Estação E5
+        [0,   0,  0 , 0, 1, 0, 0, 0, 0, 0,  0, 0, 0, 0], # Estação E6
+        [0,   0,  0 , 0, 1, 0, 0, 0, 0, 0,  0, 0, 0, 0], # Estação E7
+        [0,   0,  0 , 1, 1, 0, 0, 0, 1, 0,  0, 1, 0, 0], # Estação E8
+        [0,   1 ,  1 , 0, 0, 0, 0, 1, 0, 0,  1, 0, 0, 0], # Estação E9
+        [0,   1 ,  0 , 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0], # Estação E10
+        [0,   0,  0 , 0, 0, 0, 0, 0, 1, 0,  0, 0, 0, 0], # Estação E11
+        [0,   0,  0 , 0, 0, 0, 0, 1, 0, 0,  0, 0, 0, 0], # Estação E12
+        [0,   0,  1 , 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 1], # Estação E13
+        [0,   0,  0 , 0, 0, 0, 0, 0, 0, 0,  0, 0, 1, 0]  # Estação E14
+    ]
+
+
 
 matrix_neighbors = {
     "E1" : [("E2", 20, "blue")], 
@@ -43,29 +66,19 @@ matrix_neighbors = {
 }
 
 def get_neighbors(station):
-    if (station in matrix_neighbors):
-        return matrix_neighbors[station]
+    if (station in matrix_neighbors):                   ## estado -> pai / linha / estação / custo g
+        return matrix_neighbors[station]                ## grafo de 
 
 
 
-def best_way(start, end):
+def best_way(node_star, node_end):
     border = []
-    functionG = []
-    border.append(start)
-    while len(border) != 0:
-        aux= 0;
-        for station in border:
-            if aux == 0:
-                aux = station
-            
-
-
-        
-
-
-
-
-
-
-
-
+    border.append(node_star)
+    finded = False
+    while not finded:
+        aux = border.pop(0)
+        if (aux.station == node_end.station) and (aux.line == node_end.line):
+            finded = True
+        else:
+            for state in adjacence_matrix[int(aux.station) - 1]:
+                if adjacence_matrix[int(aux.station) - 1][state] == 1:
